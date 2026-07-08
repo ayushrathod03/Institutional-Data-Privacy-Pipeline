@@ -199,21 +199,3 @@ A 24-hour line chart plotting total cumulative power consumption by hour of the 
 ![The Executive Trend](plots/ExecutiveTrend.png)
 
 ---
-
-## 6. Data Processing & Privacy Methodologies
-
-### Data Cleaning and Imputation
-* **Deduplication:** Sensor ticks with duplicate `(household_id, timestamp)` values are removed by preserving the first occurrence.
-* **Resampling:** Datasets are reindexed to uniform 5-minute ticks, generating rows with nulls for missing periods.
-* **Linear Interpolation:** Small temperature gaps ($\le 15$ minutes) are filled using linear interpolation.
-* **Median Imputation:** Long temperature gaps and all power consumption gaps are filled using household-specific medians for that hour of the day.
-* **Winsorization / Outlier Clamping:** Extreme values (e.g., temperatures outside $[10.0^\circ\text{C}, 45.0^\circ\text{C}]$ or electrical loads outside $[0\text{ W}, 15000\text{ W}]$) are replaced with the household's median for that hour.
-
-### Data Privacy & Regulatory Compliance
-* **PII Stripping:** Direct identifiers (`owner_name`, `street_address`) are permanently deleted.
-* **Salted Hashing:** Unique household identifiers are hashed using SHA-256 with a system salt to prevent identity reconstruction:
-  $$\text{pseudonym} = \text{SHA256}(\text{household\_id} + \text{salt})[0:16]$$
-* **Occupancy Generalization:** Individual occupancy counts are binned (e.g., `1` to `"1 (Single)"`, `5` to `"5+ (Large)"`) to prevent identification via statistical outliers.
-* **Epsilon-Differential Privacy (Laplace DP):**
-  A Laplace mechanism is available to inject noise into query results, limiting database linkability:
-  $$\text{Sanitized Output} = \text{Value} + \text{Lap}\left(0, \frac{\Delta f}{\epsilon}\right)$$
