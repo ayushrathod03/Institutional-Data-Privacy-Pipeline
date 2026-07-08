@@ -1,0 +1,22 @@
+# Virtual environment
+Lib/
+Scripts/
+pyvenv.cfg
+share/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Data and databases (ignore local SQLite db and telemetry CSVs)
+data/raw/
+data/processed/*.db
+data/processed/*.csv
+data/processed/*.json
+
+# IDE config
+.vscode/
+.idea/
+.DS_Store
