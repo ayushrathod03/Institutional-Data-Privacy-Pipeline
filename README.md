@@ -31,14 +31,11 @@ D:\project\smarthome/
 │   └── test_pipeline.py      # Automated testing suite (5/5 tests passing)
 ├── dashboards/
 │   └── README.md             # Tableau integration and dimension mapping guide
-├── plots/                    # Generated professional visualization plots (Committed in Git)
-│   ├── correlation_heatmap.png
-│   ├── diurnal_hourly_profile.png
-│   ├── power_by_occupancy.png
-│   └── temp_by_motion.png
+├── plots/                    # Tableau dashboard exports (Committed in Git)
+│   ├── BehavioralChart.png
+│   └── ExecutiveTrend.png
 ├── generate_raw_data.py      # Telemetry simulation script
 ├── analyze_trends.py         # Statistical analysis (ANOVA, t-tests)
-├── generate_visualizations.py # Plot generation script (Matplotlib/Seaborn)
 ├── queries.sql               # Production-ready SQLite analytical queries
 ├── executive_summary.md      # Executive reporting document
 ├── requirements.txt          # Package dependencies
@@ -51,7 +48,7 @@ D:\project\smarthome/
 
 ### Prerequisites
 * Python 3.9+
-* Required libraries: `pandas`, `numpy`, `scipy`, `matplotlib`, `seaborn`
+* Required libraries: `pandas`, `numpy`, `scipy`
 
 ### Step 1: Install Dependencies
 Run the following command to install required packages:
@@ -77,13 +74,7 @@ Perform Pearson correlations, Kruskal-Wallis, One-Way ANOVA, and t-tests on the 
 python analyze_trends.py
 ```
 
-### Step 5: Generate Visualizations
-Generate professional seaborn visualization plots matching the analytical findings:
-```bash
-python generate_visualizations.py
-```
-
-### Step 6: Execute Automated Unit Tests
+### Step 5: Execute Automated Unit Tests
 Verify pipeline data integrity and privacy constraints:
 ```bash
 python -m unittest discover -s tests -p "test_*.py"
@@ -186,29 +177,7 @@ OK
 
 ---
 
-## 4. High-Resolution Analytical Visualizations
-
-The pipeline generates publication-grade visualizations showing demographic-behavioral relationships:
-
-### A. Electrical Load vs. Occupancy (ANOVA Verification)
-Shows that household size significantly scales electrical demand.
-![Power by Occupancy](plots/power_by_occupancy.png)
-
-### B. Thermal Response to Activity (t-Test Verification)
-Shows a $+0.64^\circ\text{C}$ temperature delta during active motion due to thermodynamic heat gains.
-![Temperature by Motion](plots/temp_by_motion.png)
-
-### C. Diurnal Behavioral & Load Profile
-Displays average hourly electrical demand mapped against overall motion activity.
-![Diurnal Hourly Profile](plots/diurnal_hourly_profile.png)
-
-### D. Pearson Correlation Heatmap
-Provides a graphical view of relational feature dependencies.
-![Correlation Heatmap](plots/correlation_heatmap.png)
-
----
-
-## 5. Tableau Dashboard Insights
+## 4. High-Resolution Tableau Dashboard Insights
 
 The processed CSV file (`data/processed/df_sensors_clean.csv`) connects directly to Tableau. The resulting dashboard confirms the following trends:
 
@@ -218,12 +187,16 @@ A bar chart demonstrating that average power consumption grows as a direct funct
 * **Coupled Occupants:** ~`531.78 W` (Average load = 2,144,156 total ticks aggregated)
 * **Large Households (5+ People):** ~`837.68 W` (Average load = 3,377,533 total ticks aggregated)
 
+![The Behavioral Profile](plots/BehavioralChart.png)
+
 ### B. The Executive Trend
 A 24-hour line chart plotting total cumulative power consumption by hour of the day. This highlights:
 * **Off-Peak Sleeping Gaps:** Flat consumption (~`160K W` cumulative) between 12 AM and 5 AM.
 * **Morning Surge:** Sharp spike starting at 6 AM peaking at ~`412K W` as occupants wake up.
 * **Mid-day Drop:** Dips to ~`240K W` during work/school hours (9 AM – 4 PM).
 * **Evening Peak:** Rises to a daily maximum of ~`443K W` at 5 PM – 9 PM during household gatherings and appliance usage.
+
+![The Executive Trend](plots/ExecutiveTrend.png)
 
 ---
 
